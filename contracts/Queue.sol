@@ -8,6 +8,12 @@ pragma solidity ^0.4.15;
  */
 
 contract Queue {
+
+	/** Array resizing factor. */
+	uint MAX_RESIZE = 2;
+	
+	// why is this defaulted to 5? 
+	
 	/* State variables */
 	uint8 size = 5;
 	// YOUR CODE HERE
@@ -21,11 +27,14 @@ contract Queue {
 	/* Returns the number of people waiting in line */
 	function qsize() constant returns(uint8) {
 		// YOUR CODE HERE
+		// MODIFIED
+		return size;
 	}
 
 	/* Returns whether the queue is empty or not */
 	function empty() constant returns(bool) {
 		// YOUR CODE HERE
+
 	}
 	
 	/* Returns the address of the person in the front of the queue */
