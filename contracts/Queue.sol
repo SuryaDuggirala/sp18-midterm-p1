@@ -12,11 +12,11 @@ contract Queue {
 /* State variables */
 
 	/** Keep track of where in the Queue we are. */
-	uint _counter; 
+	uint _counter;
 
 	/** Array resizing factor. */
 	uint MAX_RESIZE = 2;
-	
+
 	/** The number of people waiting in the queue. */
 	uint8 _numCustomers;
 
@@ -24,7 +24,7 @@ contract Queue {
 	uint8 size = 5;
 
 	/** Array base of the queue (circular array). */
-	address[size] _addrQueue; 
+	address[5] _addrQueue;
 	// YOUR CODE HERE
 
 
@@ -41,7 +41,7 @@ contract Queue {
 	function Queue() public {
 		// look into how to declare this.
 		// MODIFIED
-		_numCustomers = 0; 
+		_numCustomers = 0;
 		_counter = 0;
 		_firstPointer = 0;
 		_insertionPoint = 0;
@@ -51,52 +51,52 @@ contract Queue {
 	function qsize() public constant returns(uint8) {
 		// YOUR CODE HERE
 		// MODIFIED
-		return numCustomers;
+		return _numCustomers;
 	}
 
 	/* Returns whether the queue is empty or not */
 	function empty() constant returns(bool) {
 		// YOUR CODE HERE
-		return numCustomers == 0;
+		return _numCustomers == 0;
 	}
-	
+
 	/* Returns the address of the person in the front of the queue */
-	function getFirst() constant returns(address) {
+	function getFirst() public view returns(address) {
 		// YOUR CODE HERE
-		return addrQueue[_firstPointer];
+		return _addrQueue[_firstPointer];
 	}
-	
+
 	/* Allows `msg.sender` to check their position in the queue */
-	function checkPlace() public constant returns(uint8) {
+	function checkPlace() public view returns(uint8) {
 		// YOUR CODE HERE
 		return 0;
 	}
-	
+
 	/* Allows anyone to expel the first person in line if their time
 	 * limit is up
 	 */
 	function checkTime() {
 		// YOUR CODE HERE
-		// this is going to be tough. How do we approach this? 
+		// this is going to be tough. How do we approach this?
 	}
-	
+
 	/* Removes the first person in line; either when their time is up or when
 	 * they are done with their purchase
 	 */
 	function dequeue() {
 		// YOUR CODE HERE
-		uint8 temp = _firstPointer; 
+		uint8 temp = _firstPointer;
 		_firstPointer = (_firstPointer + size) % size;
 		_addrQueue[temp] = 0;
-		_numCustomers -= 1; 
+		_numCustomers -= 1;
 	}
 
 	/* Places `addr` in the first empty position in the queue */
 	function enqueue(address addr) {
-		// YOUR CODE HERE 
+		// YOUR CODE HERE
 		if (_numCustomers < size) {
 			_addrQueue[_insertionPoint] = addr;
-			_insertionPoint = (_insertionPoint + 1 + size) % size; 
+			_insertionPoint = (_insertionPoint + 1 + size) % size;
 			return;
 		} else {
 			return;
