@@ -9,6 +9,10 @@ pragma solidity ^0.4.15;
 
 contract Queue {
 
+// TODO 
+// We need to figure out how to make it so that people only buy if there is someone behind them in line 
+// Does this stem from the CrowdSale Contract or from Queue? 
+
 /* State variables */
 
 	/** Keep track of where in the Queue we are. */
@@ -38,6 +42,7 @@ contract Queue {
 	mapping (address => uint256) _times; 
 	
 	/* Add events */
+	event EjectUser(address userPastTimeLimit);
 	// YOUR CODE HERE
 
 	/** Constructor */
@@ -73,11 +78,13 @@ contract Queue {
 	/* Allows `msg.sender` to check their position in the queue */
 	function checkPlace() public constant returns(uint8) {
 		// YOUR CODE HERE
-		address sender = msg.sender; 
-		for (uint8 i = _firstPointer; i < _insertionPoint; i = (i + 1) % size) {
+		address sender = msg.sender;
+		uint8 count = 1;
+		for (uint8 i = _firstPointer; i < _insertionPoint; i = (i + 1 + size) % size) {
 			if (_addrQueue[i] == sender) {
-				return i;
+				return count;
 			}
+			count += 1;
 		}
 		return 0;
 	}
@@ -96,14 +103,13 @@ contract Queue {
 		address runner = _addrQueue[dummyPointer];
 		while (runner != checker) {
 			uint256 runnerTime = _times[runner];
-			if (runnerTime > endTime) {
+			if (runner != 0 && runnerTime > endTime) {
 				_addrQueue[_firstPointer] = 0;
 				_times[runner] = 0;
 				_firstPointer = (_firstPointer + 1 + size) % size;
 			}
 			runner = _addrQueue[++dummyPointer];
 		}
-
 	}
 	
 	/* Removes the first person in line; either when their time is up or when
@@ -112,9 +118,10 @@ contract Queue {
 	function dequeue() {
 		// YOUR CODE HERE
 		uint8 temp = _firstPointer; 
-		_firstPointer = (_firstPointer + size) % size;
+		_times[_addrQueue[temp]] = 0;
+		_firstPointer = (_firstPointer + size + 1) % size;
 		_addrQueue[temp] = 0;
-		_numCustomers -= 1; 
+		_numCustomers -= 1;
 		// TODO INCORPORATE TIME STAMPS
 	}
 
@@ -122,7 +129,7 @@ contract Queue {
 	function enqueue(address addr) {
 		// YOUR CODE HERE
 		if (_numCustomers < size) {
-			_times[addr] = now;
+			_times[addr] = now + (5 days);
 			_addrQueue[_insertionPoint] = addr;
 			_insertionPoint = (_insertionPoint + 1 + size) % size; 
 			return;
