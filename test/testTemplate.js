@@ -1,34 +1,35 @@
-'use strict';
+'use strict'
 
 /* Add the dependencies you're testing */
-const Crowdsale = artifacts.require("./Crowdsale.sol");
+const Crowdsale = artifacts.require('./Crowdsale.sol')
 // YOUR CODE HERE
 
-contract('testTemplate', function(accounts) {
-	/* Define your constant variables and instantiate constantly changing 
+contract('CrowdsaleTest', function(accounts) {
+	/* Define your constant variables and instantiate constantly changing
 	 * ones
 	 */
-	const args = {};
-	let x, y, z;
-	// YOUR CODE HERE
+	const args = { _initialSupply: 1000000000 }
+	let crowdSale
+	let token
 
 	/* Do something before every `describe` method */
-	beforeEach(async function() {
+	beforeEach(async () => {
 		// YOUR CODE HERE
-	});
+		crowdSale = await Crowdsale.new(_initialSupply, 'TestToken', 'TTK', 2)
+	})
 
-	/* Group test cases together 
+	/* Group test cases together
 	 * Make sure to provide descriptive strings for method arguements and
 	 * assert statements
 	 */
-	describe('Your string here', function() {
-		it("your string here", async function() {
-			// YOUR CODE HERE
-		});
+	describe('~Crowdsale Works~', () => {
+		it('deploys a Token', async () => {
+			assert.ok(Token.options.address)
+		})
 		// YOUR CODE HERE
-	});
+	})
 
 	describe('Your string here', function() {
 		// YOUR CODE HERE
-	});
-});
+	})
+})

@@ -16,11 +16,11 @@ contract Queue {
 /* State variables */
 
 	/** Keep track of where in the Queue we are. */
-	uint _counter; 
+	uint _counter;
 
 	/** Array resizing factor. */
 	uint MAX_RESIZE = 2;
-	
+
 	/** The number of people waiting in the queue. */
 	uint8 _numCustomers;
 
@@ -49,7 +49,7 @@ contract Queue {
 	function Queue() public {
 		// look into how to declare this.
 		// MODIFIED
-		_numCustomers = 0; 
+		_numCustomers = 0;
 		_counter = 0;
 		_firstPointer = 0;
 		_insertionPoint = 0;
@@ -68,15 +68,15 @@ contract Queue {
 		// YOUR CODE HERE
 		return _numCustomers == 0;
 	}
-	
+
 	/* Returns the address of the person in the front of the queue */
-	function getFirst() constant returns(address) {
+	function getFirst() public view returns(address) {
 		// YOUR CODE HERE
 		return _addrQueue[_firstPointer];
 	}
-	
+
 	/* Allows `msg.sender` to check their position in the queue */
-	function checkPlace() public constant returns(uint8) {
+	function checkPlace() public view returns(uint8) {
 		// YOUR CODE HERE
 		address sender = msg.sender;
 		uint8 count = 1;
@@ -88,12 +88,13 @@ contract Queue {
 		}
 		return 0;
 	}
-	
+
 	/* Allows anyone to expel the first person in line if their time
 	 * limit is up
 	 */
 	function checkTime() {
 		// YOUR CODE HERE
+<<<<<<< HEAD
 		// TODO
 		// this is going to be tough. How do we approach this?
 		// we need to add the end time here
@@ -110,19 +111,29 @@ contract Queue {
 			}
 			runner = _addrQueue[++dummyPointer];
 		}
+=======
+		// this is going to be tough. How do we approach this?
+>>>>>>> 10b2cb2b975b3818fe2285ae146837ed0c9a091a
 	}
-	
+
 	/* Removes the first person in line; either when their time is up or when
 	 * they are done with their purchase
 	 */
 	function dequeue() {
 		// YOUR CODE HERE
+<<<<<<< HEAD
 		uint8 temp = _firstPointer; 
 		_times[_addrQueue[temp]] = 0;
 		_firstPointer = (_firstPointer + size + 1) % size;
 		_addrQueue[temp] = 0;
 		_numCustomers -= 1;
 		// TODO INCORPORATE TIME STAMPS
+=======
+		uint8 temp = _firstPointer;
+		_firstPointer = (_firstPointer + size) % size;
+		_addrQueue[temp] = 0;
+		_numCustomers -= 1;
+>>>>>>> 10b2cb2b975b3818fe2285ae146837ed0c9a091a
 	}
 
 	/* Places `addr` in the first empty position in the queue */
@@ -131,7 +142,7 @@ contract Queue {
 		if (_numCustomers < size) {
 			_times[addr] = now + (5 days);
 			_addrQueue[_insertionPoint] = addr;
-			_insertionPoint = (_insertionPoint + 1 + size) % size; 
+			_insertionPoint = (_insertionPoint + 1 + size) % size;
 			return;
 		} else {
 			return;
