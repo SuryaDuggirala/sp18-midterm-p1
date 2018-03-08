@@ -53,7 +53,6 @@ contract Queue {
 		_counter = 0;
 		_firstPointer = 0;
 		_insertionPoint = 0;
-
 	}
 
 	/* Returns the number of people waiting in line */
@@ -61,7 +60,7 @@ contract Queue {
 		// YOUR CODE HERE
 		// MODIFIED
 		return _numCustomers;
-	}
+	} 
 
 	/* Returns whether the queue is empty or not */
 	function empty() constant returns(bool) {
@@ -94,7 +93,6 @@ contract Queue {
 	 */
 	function checkTime() {
 		// YOUR CODE HERE
-<<<<<<< HEAD
 		// TODO
 		// this is going to be tough. How do we approach this?
 		// we need to add the end time here
@@ -111,9 +109,6 @@ contract Queue {
 			}
 			runner = _addrQueue[++dummyPointer];
 		}
-=======
-		// this is going to be tough. How do we approach this?
->>>>>>> 10b2cb2b975b3818fe2285ae146837ed0c9a091a
 	}
 
 	/* Removes the first person in line; either when their time is up or when
@@ -121,19 +116,12 @@ contract Queue {
 	 */
 	function dequeue() {
 		// YOUR CODE HERE
-<<<<<<< HEAD
 		uint8 temp = _firstPointer; 
 		_times[_addrQueue[temp]] = 0;
 		_firstPointer = (_firstPointer + size + 1) % size;
 		_addrQueue[temp] = 0;
 		_numCustomers -= 1;
 		// TODO INCORPORATE TIME STAMPS
-=======
-		uint8 temp = _firstPointer;
-		_firstPointer = (_firstPointer + size) % size;
-		_addrQueue[temp] = 0;
-		_numCustomers -= 1;
->>>>>>> 10b2cb2b975b3818fe2285ae146837ed0c9a091a
 	}
 
 	/* Places `addr` in the first empty position in the queue */

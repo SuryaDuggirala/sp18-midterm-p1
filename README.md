@@ -10,9 +10,9 @@ Email: morgan.jordan@berkeley.edu
 Project Partner 2
 Name: SURYA DUGGIRALA
 
-SID:
+SID: 26132062
 
-Email:
+Email: suryad96@berkeley.edu
 
 # MIDTERM: Launching an ICO
 
